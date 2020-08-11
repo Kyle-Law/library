@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+body {
+  background-color: whitesmoke;
+}
+
 body,
 button {
   font-family: Faustina, sans-serif;
@@ -20,6 +24,7 @@ button {
   justify-content: center;
   border-top: 1px solid black;
   padding: 10px;
+  grid-template-columns: 1fr;
 }
 
 .btn-container {
@@ -36,6 +41,21 @@ button {
   font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 2px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+.add-book:hover {
+  color: white;
+  background-color: black;
+  cursor: pointer;
+}
+
+.book-shelf {
+  display: grid;
+  height: max-content;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .book-item {
@@ -47,8 +67,39 @@ button {
   grid-gap: 10px;
 }
 
+.action-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+}
+
 .read,
 .remove {
   padding: 5px;
   border-radius: 3px;
+  font-size: 1.1rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.read:hover,
+.remove:hover {
+  filter: brightness(0.9);
+  cursor: pointer;
+}
+
+.add-book:active,
+.read:active,
+.remove:active {
+  transform: translateY(1px);
+}
+
+.read {
+  background-color: green;
+  color: white;
+}
+
+.remove {
+  background-color: red;
+  color: white;
 }
