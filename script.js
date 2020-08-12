@@ -1,7 +1,16 @@
 let myLibrary = [];
 const btnContainer = document.getElementById("btn-container");
 const bookShelf = document.getElementById("book-shelf");
+const modal = document.getElementById("modal");
+const modalShow = document.getElementById("show-modal");
+const modalClose = document.getElementById("close-modal");
+const addBookForm = document.getElementById("addbook-form");
+const bookTitleEl = document.getElementById("book-title");
+const bookAuthorEl = document.getElementById("book-author");
+const bookPriceEl = document.getElementById("book-price");
+const bookStatusEl = document.getElementById("book-status");
 
+// Book Class
 function Book(title, author, price, status) {
   this.title = title;
   this.author = author;
@@ -9,19 +18,45 @@ function Book(title, author, price, status) {
   this.status = status;
 }
 
+// Show Modal, Focus on Input
+function showModal() {
+  modal.classList.add("show-modal");
+  bookTitleEl.focus();
+}
+
+function storeBook(e) {
+  e.preventDefault();
+  const title = bookTitleEl.value;
+  const author = bookAuthorEl.value;
+  const price = bookPriceEl.value;
+  const status = bookStatusEl.value;
+
+  // Set bookmark object, add to array
+  const book = new Book(title, author, price, status);
+  addBookToLibrary(book);
+  // Set bookmarks in localStorage, fetch, reset input fields
+  localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+  render();
+  addBookForm.reset();
+  bookTitleEl.focus();
+}
+
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-function addBookBtn() {
-  const btn = document.createElement("button");
-  btn.setAttribute("id", "add-book");
-  btn.classList.add("add-book");
-  btn.textContent = "Add Book";
-  btnContainer.appendChild(btn);
-}
+// function addBookBtn() {
+//   const btn = document.createElement("button");
+//   btn.setAttribute("id", "show-modal");
+//   btn.classList.add("add-book");
+//   btn.textContent = "Add Book";
+//   btnContainer.appendChild(btn);
+//   btn.addEventListener("click", () => {
+//     console.log("adding book...");
+//   });
+// }
 
-function retriveItem() {
+function retriveBooks() {
   if (localStorage.getItem("myLibrary")) {
     myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
   } else {
@@ -39,8 +74,9 @@ function appendChildren(parent, children) {
 }
 
 function render() {
-  addBookBtn();
-  retriveItem();
+  // Remove all book shelf elements
+  bookShelf.textContent = "";
+  retriveBooks();
   myLibrary.forEach((book, index) => {
     const bookItem = document.createElement("div");
     bookItem.classList.add("book-item");
@@ -53,7 +89,7 @@ function render() {
     price.classList.add("price");
     title.textContent = book.title;
     author.textContent = book.author;
-    price.textContent = book.price;
+    price.textContent = `$ ${book.price}`;
     const actionContainer = document.createElement("div");
     actionContainer.classList.add("action-container");
     const readBtn = document.createElement("button");
@@ -85,11 +121,20 @@ function render() {
         myLibrary[index].status = "Unread";
         readBtn.textContent = "Read";
       }
-      console.log(myLibrary);
       localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
     });
   });
 }
+
+// Modal Event Listeners
+modalShow.addEventListener("click", showModal);
+modalClose.addEventListener("click", () =>
+  modal.classList.remove("show-modal")
+);
+window.addEventListener("click", (e) =>
+  e.target === modal ? modal.classList.remove("show-modal") : false
+);
+addBookForm.addEventListener("submit", storeBook);
 
 // On Load
 render();
