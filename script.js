@@ -83,9 +83,9 @@ function render() {
     title.classList.add("title");
     title.textContent = book.title;
     // Book Author
-    const author = document.createElement("h2");
+    const author = document.createElement("h3");
     author.classList.add("author");
-    author.textContent = book.author;
+    author.textContent = `Author: ${book.author}`;
     // Book Price
     const price = document.createElement("p");
     price.classList.add("price");
