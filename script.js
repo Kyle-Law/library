@@ -7,13 +7,15 @@ const modalClose = document.getElementById('close-modal');
 const addBookForm = document.getElementById('addbook-form');
 const bookTitleEl = document.getElementById('book-title');
 const bookAuthorEl = document.getElementById('book-author');
+const bookPagesEl = document.getElementById('book-pages');
 const bookPriceEl = document.getElementById('book-price');
 const bookStatusEl = document.getElementById('book-status');
 
 // Book Class
-function Book(title, author, price, status) {
+function Book(title, author, pages, price, status) {
   this.title = title;
   this.author = author;
+  this.pages = pages;
   this.price = price;
   this.status = status;
 }
@@ -32,14 +34,23 @@ function appendChildren(parent, children) {
   children.forEach((child) => parent.appendChild(child));
 }
 
+function validateForm() {
+  return [
+    bookTitleEl.value,
+    bookAuthorEl.value,
+    bookPriceEl.value,
+    bookStatusEl.value,
+  ].every((v) => v !== '');
+}
+
 function retriveBooks() {
   if (localStorage.getItem('myLibrary')) {
     myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
   } else {
     myLibrary = [
-      new Book('JavaScript Demystified', 'kyle', 19.9, 'Unread'),
-      new Book('CSS Demystified', 'Kyle', 9.9, 'Unread'),
-      new Book('HTML Demystified', 'Kyle', 9.9, 'Unread'),
+      new Book('JavaScript Demystified', 'kyle', 300, 19.9, 'Unread'),
+      new Book('CSS Demystified', 'Kyle', 200, 9.9, 'Unread'),
+      new Book('HTML Demystified', 'Kyle', 100, 9.9, 'Unread'),
     ];
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
   }
@@ -62,6 +73,10 @@ function render() {
     const author = document.createElement('h3');
     author.classList.add('author');
     author.textContent = `Author: ${book.author}`;
+    // Book Pages
+    const pages = document.createElement('h4');
+    pages.classList.add('pages');
+    pages.textContent = `Pages: ${book.pages}`;
     // Book Price
     const price = document.createElement('p');
     price.classList.add('price');
@@ -84,7 +99,7 @@ function render() {
     removeBtn.classList.add('remove');
     // Append Nodes
     appendChildren(actionContainer, [readBtn, removeBtn]);
-    appendChildren(bookItem, [title, author, price, actionContainer]);
+    appendChildren(bookItem, [title, author, pages, price, actionContainer]);
     bookShelf.appendChild(bookItem);
     // Add Event Listeners for Read and Remove buttons
     removeBtn.addEventListener('click', () => {
@@ -105,22 +120,28 @@ function render() {
   });
 }
 
+/* eslint-disable no-alert */
 function storeBook(e) {
   e.preventDefault();
-  const title = bookTitleEl.value;
-  const author = bookAuthorEl.value;
-  const price = bookPriceEl.value;
-  const status = bookStatusEl.value;
-
-  // Set book object, add to array
-  const book = new Book(title, author, price, status);
-  addBookToLibrary(book);
-  // Set bookmarks in localStorage, fetch, reset input fields
-  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
-  render();
-  addBookForm.reset();
-  bookTitleEl.focus();
+  if (validateForm()) {
+    const title = bookTitleEl.value;
+    const author = bookAuthorEl.value;
+    const price = bookPriceEl.value;
+    const pages = bookPagesEl.value;
+    const status = bookStatusEl.value;
+    // Set book object, add to array
+    const book = new Book(title, author, pages, price, status);
+    addBookToLibrary(book);
+    // Set bookmarks in localStorage, fetch, reset input fields
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+    render();
+    addBookForm.reset();
+    bookTitleEl.focus();
+  } else {
+    alert('No empty values');
+  }
 }
+/* eslint-enable no-alert */
 
 // Modal Event Listeners
 modalShow.addEventListener('click', showModal);
