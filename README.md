@@ -2,15 +2,15 @@
 
 > A simple web app for storing books
 
-![image]()
+![image](https://user-images.githubusercontent.com/55923773/90001349-e7911580-dcc3-11ea-82cd-f3296c1a08bd.png)
 
 ## Live Version
 
-View the live version [HERE]()
+View the live version [HERE](https://rawcdn.githack.com/Kyle-Law/library/528b0d400200b27516fec213b41da831344715cf/index.html)
 
 ## Built With
 
-- JavaScript
+- JavaScript, HTML5, CSS
 
 ## Authors
 
