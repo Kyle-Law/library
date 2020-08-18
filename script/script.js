@@ -1,26 +1,4 @@
-// Variables
-let myLibrary = [];
-const bookShelf = document.getElementById('book-shelf');
-const modal = document.getElementById('modal');
-const modalShow = document.getElementById('show-modal');
-const modalClose = document.getElementById('close-modal');
-const addBookForm = document.getElementById('addbook-form');
-const bookTitleEl = document.getElementById('book-title');
-const bookAuthorEl = document.getElementById('book-author');
-const bookPagesEl = document.getElementById('book-pages');
-const bookPriceEl = document.getElementById('book-price');
-const bookStatusEl = document.getElementById('book-status');
-
-// Book Class
-function Book(title, author, pages, price, status) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.price = price;
-  this.status = status;
-}
-
-// Show Modal, Focus on Input
+/* eslint-disable no-undef */
 function showModal() {
   modal.classList.add('show-modal');
   bookTitleEl.focus();
@@ -57,33 +35,26 @@ function retriveBooks() {
 }
 
 function render() {
-  // Remove all book shelf elements
   bookShelf.textContent = '';
   retriveBooks();
   myLibrary.forEach((book, index) => {
-    // Book Item
     const bookItem = document.createElement('div');
     bookItem.classList.add('book-item');
     bookItem.setAttribute('id', 'book-item');
-    // Book Title
     const title = document.createElement('h1');
     title.classList.add('title');
     title.textContent = book.title;
-    // Book Author
     const author = document.createElement('h3');
     author.classList.add('author');
     author.textContent = `Author: ${book.author}`;
-    // Book Pages
     const pages = document.createElement('h4');
     pages.classList.add('pages');
     pages.textContent = `Pages: ${book.pages}`;
-    // Book Price
     const price = document.createElement('p');
     price.classList.add('price');
     price.textContent = `$ ${book.price}`;
     const actionContainer = document.createElement('div');
     actionContainer.classList.add('action-container');
-    // Read Button
     const readBtn = document.createElement('button');
     if (book.status === 'Read') {
       readBtn.textContent = 'Unread';
@@ -129,14 +100,13 @@ function storeBook(e) {
     const price = bookPriceEl.value;
     const pages = bookPagesEl.value;
     const status = bookStatusEl.value;
-    // Set book object, add to array
     const book = new Book(title, author, pages, price, status);
     addBookToLibrary(book);
-    // Set bookmarks in localStorage, fetch, reset input fields
     localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
     render();
     addBookForm.reset();
     bookTitleEl.focus();
+    modal.classList.remove('show-modal');
   } else {
     alert('No empty values');
   }
