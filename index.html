@@ -3,10 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Library</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <script src="script.js"></script>
+    <div class="btn-container" id="btn-container">
+      <button id="show-modal" class="add-book">Add Book</button>
+    </div>
+    <div class="app-container">
+      <div class="book-shelf" id="book-shelf"></div>
+      <div class="modal-container" id="modal">
+        <div class="modal">
+          <i class="fas fa-times close-icon" id="close-modal"></i>
+          <div class="modal-header">
+            <h3>ADD Book</h3>
+          </div>
+          <div class="modal-content">
+            <form id="addbook-form">
+              <!-- Book Name -->
+              <div class="form-group">
+                <label for="book-title" class="form-label">Book Title</label>
+                <input type="text" class="form-input" id="book-title" />
+              </div>
+              <!-- book Author -->
+              <div class="form-group">
+                <label for="book-author" class="form-label">book author</label>
+                <input type="text" class="form-input" id="book-author" />
+              </div>
+              <!-- book pages -->
+              <div class="form-group">
+                <label for="book-pages" class="form-label">book pages</label>
+                <input
+                  type="number"
+                  min="1"
+                  class="form-input"
+                  id="book-pages"
+                />
+              </div>
+              <!-- book price -->
+              <div class="form-group">
+                <label for="book-price" class="form-label">book price</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-input"
+                  id="book-price"
+                />
+              </div>
+              <!-- book status -->
+              <label for="book-status" class="form-label">book status</label>
+              <select id="book-status" class="form-input">
+                <option value="Read">Read</option>
+                <option value="Unread" selected>Unread</option>
+              </select>
+              <button type="submit">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./script/Book.js"></script>
+    <script src="./script/variables.js"></script>
+    <script src="./script/script.js"></script>
   </body>
 </html>
